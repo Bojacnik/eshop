@@ -3,4 +3,10 @@
     <string name="logo">Logo</string>
     <string name="shopping_cart">Shopping cart</string>
     <string name="item_image">Item Image</string>
+    <string name="default_text">Default text</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="bought_items">Bought items</string>
+    <string name="items_in_shopping_cart">Items in shopping cart</string>
+    <string name="buy">Buy</string>
 </resources>
