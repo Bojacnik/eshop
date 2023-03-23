@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,28 +8,56 @@
     android:orientation="vertical"
     >
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_height="70dp"
+        android:id="@+id/appbarLayout"
+
+        >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/navbar"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
         android:background="@color/design_default_color_primary"
         >
+        <Button
+            android:id="@+id/backButton"
+            app:layout_constraintTop_toTopOf="@id/navbar"
+            app:layout_constraintBottom_toBottomOf="@id/navbar"
+            app:layout_constraintLeft_toLeftOf="@id/navbar"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/rounded_corner_gray"
+            android:text="@string/arrow_left"
+            android:textSize="30sp"
+            android:textAlignment="center"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            />
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="match_parent"
+            android:layout_width="100dp"
             android:layout_height="50dp"
             android:src="@drawable/jidl"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             app:layout_constraintBottom_toBottomOf="@+id/navbar"
             app:layout_constraintTop_toTopOf="@+id/navbar"
+            app:layout_constraintLeft_toLeftOf="@id/navbar"
+            app:layout_constraintRight_toRightOf="@id/navbar"
             android:contentDescription="@string/logo"
-
+            android:background="@drawable/rounded_corner_white"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
     <TextView
+        android:id="@+id/item_textview"
+        app:layout_constraintTop_toBottomOf="@id/appbarLayout"
+        app:layout_constraintLeft_toLeftOf="@id/appbarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/items_in_shopping_cart"
@@ -37,10 +65,33 @@
         android:textSize="30dp"
         />
     <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintTop_toBottomOf="@id/item_textview"
         android:id="@+id/itemRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         />
+    <Button
+        android:id="@+id/btnRemoveSelected"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/remove_item"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+    <!--- these buttons should be in some sort of layout -->
+    <Button
+        android:id="@+id/btnRemoveAll"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/remove_item"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+    <!-- todo: add buy button that sends an email with the order, or parse it to json-->
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

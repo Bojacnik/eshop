@@ -2,6 +2,8 @@ package com.uzlabina.eshop
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uzlabina.eshop.adapter.ShoppingItemAdapter
@@ -18,6 +20,12 @@ class ShoppingCartOverview : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.itemRecyclerView)
         recyclerView.layoutManager = GridLayoutManager(applicationContext, 4)
         recyclerView.adapter = adapter
+
+        val backButton = findViewById<Button>(R.id.backButton)
+        backButton.setOnClickListener(View.OnClickListener {
+            onBackPressed()
+        })
+
     }
 
 
