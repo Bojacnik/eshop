@@ -11,4 +11,5 @@
     <string name="add_item">Add item to cart</string>
     <string name="arrow_left">￩</string>
     <string name="remove_item">Remove item from cart</string>
+    <string name="send">send</string>
 </resources>

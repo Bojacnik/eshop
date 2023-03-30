@@ -10,7 +10,7 @@ import com.uzlabina.eshop.adapter.ShoppingItemAdapter
 import com.uzlabina.eshop.data.ShoppingItem
 
 class ShoppingCartOverview : AppCompatActivity() {
-    private lateinit var selectedItems: MutableList<ShoppingItem>
+    public lateinit var selectedItems: MutableList<ShoppingItem>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shopping_cart_overview)
