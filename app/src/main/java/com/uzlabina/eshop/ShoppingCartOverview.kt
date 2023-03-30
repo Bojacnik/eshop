@@ -22,8 +22,13 @@ class ShoppingCartOverview : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         val backButton = findViewById<Button>(R.id.backButton)
-        backButton.setOnClickListener(View.OnClickListener {
+        backButton.setOnClickListener({
             onBackPressed()
+        })
+
+        val sendButton = findViewById<Button>(R.id.sendButton)
+        sendButton.setOnClickListener({
+
         })
 
     }
