@@ -22,14 +22,27 @@ class ShoppingCartOverview : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         val backButton = findViewById<Button>(R.id.backButton)
-        backButton.setOnClickListener({
+        backButton.setOnClickListener {
             onBackPressed()
-        })
+        }
 
         val sendButton = findViewById<Button>(R.id.sendButton)
-        sendButton.setOnClickListener({
+        sendButton.setOnClickListener {
+        }
 
-        })
+        val removeitemButton = findViewById<Button>(R.id.btnRemoveSelected)
+        removeitemButton.setOnClickListener {
+            selectedItems.remove(adapter.selectedItem)
+            TODO("Deletes it from local list, but not from MainActivity list")
+            adapter.notifyDataSetChanged()
+        }
+
+        val removeitemsButton = findViewById<Button>(R.id.btnRemoveAll)
+        removeitemsButton.setOnClickListener {
+            selectedItems.clear()
+            TODO("Deletes it from local list, but not from MainActivity list")
+            adapter.notifyDataSetChanged()
+        }
 
     }
 

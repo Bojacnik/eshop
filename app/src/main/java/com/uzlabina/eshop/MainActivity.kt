@@ -13,6 +13,7 @@ import com.uzlabina.eshop.data.ShoppingItem
 
 class MainActivity : AppCompatActivity() {
 
+    public val selectedItems = mutableListOf<ShoppingItem>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = GridLayoutManager(applicationContext, 4)
         recyclerView.adapter = adapter
 
-        val selectedItems = mutableListOf<ShoppingItem>()
         findViewById<Button>(R.id.btnBuy).setOnClickListener(View.OnClickListener {
             adapter.selectedItem?.let {
                 selectedItems.add(adapter.selectedItem)
