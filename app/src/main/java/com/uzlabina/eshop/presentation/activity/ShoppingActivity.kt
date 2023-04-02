@@ -1,4 +1,4 @@
-package com.uzlabina.eshop
+package com.uzlabina.eshop.presentation.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,23 +8,20 @@ import android.widget.Button
 import android.widget.ImageButton
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.uzlabina.eshop.adapter.ShoppingItemAdapter
-import com.uzlabina.eshop.data.ShoppingItem
+import com.uzlabina.eshop.R
+import com.uzlabina.eshop.presentation.adapter.ShoppingItemAdapter
+import com.uzlabina.eshop.domain.ShoppingItem
 
-class MainActivity : AppCompatActivity() {
+class ShoppingActivity : AppCompatActivity() {
 
-    public val selectedItems = mutableListOf<ShoppingItem>()
+    val selectedItems = mutableListOf<ShoppingItem>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val shoppingItems = mutableListOf<ShoppingItem>()
-        shoppingItems.add(ShoppingItem(0, "Počítač", 30598, R.drawable.jidl))
-        shoppingItems.add(ShoppingItem(1, "Pero", 10, R.drawable.ic_launcher_background))
-        shoppingItems.add(ShoppingItem(2, "Shopping cart", 3000, R.drawable.ic_baseline_shopping_cart_24))
-        shoppingItems.add(ShoppingItem(2, "Shopping cart", 3000, R.drawable.ic_baseline_shopping_cart_24))
-        shoppingItems.add(ShoppingItem(2, "Shopping cart", 3000, R.drawable.ic_baseline_shopping_cart_24))
-        shoppingItems.add(ShoppingItem(2, "Shopping cart", 3000, R.drawable.ic_baseline_shopping_cart_24))
+        shoppingItems.add(ShoppingItem(0, "Počítač", null, 30598, R.drawable.jidl))
+        shoppingItems.add(ShoppingItem(1, "Pero", null, 15, R.drawable.ic_launcher_background))
 
         val adapter = ShoppingItemAdapter(shoppingItems)
         val recyclerView = findViewById<RecyclerView>(R.id.itemRecyclerView)
@@ -32,12 +29,12 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         findViewById<Button>(R.id.btnBuy).setOnClickListener(View.OnClickListener {
-            adapter.selectedItem?.let {
+            adapter.selectedItem.let {
                 selectedItems.add(adapter.selectedItem)
             }
         })
         findViewById<ImageButton>(R.id.btnShoppingCart).setOnClickListener(View.OnClickListener {
-            val intent = Intent(this, ShoppingCartOverview::class.java)
+            val intent = Intent(this, ShoppingCartActivity::class.java)
             intent.putExtra("selectedItems", selectedItems as java.io.Serializable)
             startActivity(intent)
         })

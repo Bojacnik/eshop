@@ -1,4 +1,4 @@
-package com.uzlabina.eshop.adapter
+package com.uzlabina.eshop.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,11 +8,11 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.uzlabina.eshop.R
-import com.uzlabina.eshop.data.ShoppingItem
+import com.uzlabina.eshop.domain.ShoppingItem
 
 class ShoppingItemAdapter(private val items: MutableList<ShoppingItem>) : RecyclerView.Adapter<ShoppingItemAdapter.ViewHolder>() {
 
-    public lateinit var selectedItem: ShoppingItem
+    lateinit var selectedItem: ShoppingItem
 
     // Create the ViewHolder for the RecyclerView items
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
