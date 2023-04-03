@@ -9,8 +9,15 @@ import android.widget.ImageButton
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uzlabina.eshop.R
+import com.uzlabina.eshop.data.datasources.EshopDataStorage
+import com.uzlabina.eshop.data.datasources.EshopDatabaseHelperImpl
+import com.uzlabina.eshop.data.repositories.EshopRepositoryImpl
 import com.uzlabina.eshop.presentation.adapter.ShoppingItemAdapter
 import com.uzlabina.eshop.domain.ShoppingItem
+import com.uzlabina.eshop.domain.repositories.EshopRepository
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
+import org.koin.dsl.module
 
 class ShoppingActivity : AppCompatActivity() {
 
@@ -18,6 +25,16 @@ class ShoppingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val storage: EshopDataStorage = EshopDatabaseHelperImpl(this@ShoppingActivity)
+        val myModule = module {
+            single<EshopDataStorage> { storage }
+            single<EshopRepository> { EshopRepositoryImpl() }
+        }
+        startKoin {
+            androidContext(this@ShoppingActivity)
+            modules(myModule)
+        }
 
         val shoppingItems = mutableListOf<ShoppingItem>()
         shoppingItems.add(ShoppingItem(0, "Počítač", null, 30598, R.drawable.jidl))

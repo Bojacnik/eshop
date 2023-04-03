@@ -11,8 +11,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class EshopDatabaseHelper(context: Context) :
-    SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+interface EshopDataStorage {
+    fun addShoppingItem(shoppingItemModel: ShoppingItemModel)
+    suspend fun getShoppingItems(): MutableList<ShoppingItemModel>
+}
+
+class EshopDatabaseHelperImpl(context: Context) :
+    SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION), EshopDataStorage {
 
     companion object {
         const val DATABASE_NAME = "eshop_database"
@@ -28,7 +33,7 @@ class EshopDatabaseHelper(context: Context) :
         onCreate(db)
     }
 
-    fun addShoppingItem(shoppingItemModel: ShoppingItemModel) {
+    override fun addShoppingItem(shoppingItemModel: ShoppingItemModel) {
         CoroutineScope(Dispatchers.IO).launch {
             val values = ContentValues()
             values.put(EshopTable.COLUMN_NAME, shoppingItemModel.name)
@@ -36,17 +41,17 @@ class EshopDatabaseHelper(context: Context) :
             values.put(EshopTable.COLUMN_PRICE, shoppingItemModel.price)
             values.put(EshopTable.COLUMN_IMAGEID, shoppingItemModel.imageID)
 
-            val db = this@EshopDatabaseHelper.writableDatabase
+            val db = this@EshopDatabaseHelperImpl.writableDatabase
             db.insert(EshopTable.TABLE_NAME, null, values)
             db.close()
         }
     }
 
-    suspend fun getShoppingItems(): MutableList<ShoppingItemModel> {
+    override suspend fun getShoppingItems(): MutableList<ShoppingItemModel> {
         return withContext(Dispatchers.IO) {
         val shoppingItems = mutableListOf<ShoppingItemModel>()
 
-        val db = this@EshopDatabaseHelper.readableDatabase
+        val db = this@EshopDatabaseHelperImpl.readableDatabase
         val columns = arrayOf(
             EshopTable.COLUMN_ID,
             EshopTable.COLUMN_NAME,
