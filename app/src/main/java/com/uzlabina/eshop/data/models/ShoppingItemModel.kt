@@ -1,6 +1,6 @@
 package com.uzlabina.eshop.data.models
 
-import com.uzlabina.eshop.domain.ShoppingItem
+import com.uzlabina.eshop.domain.entities.ShoppingItem
 
 class ShoppingItemModel(id: Int,
                         name: String,

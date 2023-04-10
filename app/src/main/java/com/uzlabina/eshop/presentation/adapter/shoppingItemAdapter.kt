@@ -8,7 +8,8 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.uzlabina.eshop.R
-import com.uzlabina.eshop.domain.ShoppingItem
+import com.uzlabina.eshop.data.models.ShoppingItemModel
+import com.uzlabina.eshop.domain.entities.ShoppingItem
 
 class ShoppingItemAdapter(private val items: MutableList<ShoppingItem>) : RecyclerView.Adapter<ShoppingItemAdapter.ViewHolder>() {
 

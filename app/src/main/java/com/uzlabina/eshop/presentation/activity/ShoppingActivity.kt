@@ -13,7 +13,7 @@ import com.uzlabina.eshop.data.datasources.EshopDataStorage
 import com.uzlabina.eshop.data.datasources.EshopDatabaseHelperImpl
 import com.uzlabina.eshop.data.repositories.EshopRepositoryImpl
 import com.uzlabina.eshop.presentation.adapter.ShoppingItemAdapter
-import com.uzlabina.eshop.domain.ShoppingItem
+import com.uzlabina.eshop.domain.entities.ShoppingItem
 import com.uzlabina.eshop.domain.repositories.EshopRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -21,7 +21,7 @@ import org.koin.dsl.module
 
 class ShoppingActivity : AppCompatActivity() {
 
-    val selectedItems = mutableListOf<ShoppingItem>()
+    private val selectedItems = mutableListOf<ShoppingItem>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -50,11 +50,11 @@ class ShoppingActivity : AppCompatActivity() {
                 selectedItems.add(adapter.selectedItem)
             }
         })
-        findViewById<ImageButton>(R.id.btnShoppingCart).setOnClickListener(View.OnClickListener {
+        findViewById<ImageButton>(R.id.btnShoppingCart).setOnClickListener {
             val intent = Intent(this, ShoppingCartActivity::class.java)
             intent.putExtra("selectedItems", selectedItems as java.io.Serializable)
             startActivity(intent)
-        })
+        }
     }
 
 

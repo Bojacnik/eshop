@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 interface EshopDataStorage {
-    fun addShoppingItem(shoppingItemModel: ShoppingItemModel)
+    suspend fun addShoppingItem(shoppingItemModel: ShoppingItemModel)
     suspend fun getShoppingItems(): MutableList<ShoppingItemModel>
 }
 
@@ -33,18 +33,16 @@ class EshopDatabaseHelperImpl(context: Context) :
         onCreate(db)
     }
 
-    override fun addShoppingItem(shoppingItemModel: ShoppingItemModel) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val values = ContentValues()
-            values.put(EshopTable.COLUMN_NAME, shoppingItemModel.name)
-            values.put(EshopTable.COLUMN_DESCRIPTION, shoppingItemModel.description)
-            values.put(EshopTable.COLUMN_PRICE, shoppingItemModel.price)
-            values.put(EshopTable.COLUMN_IMAGEID, shoppingItemModel.imageID)
+    override suspend fun addShoppingItem(shoppingItemModel: ShoppingItemModel) {
+        val values = ContentValues()
+        values.put(EshopTable.COLUMN_NAME, shoppingItemModel.name)
+        values.put(EshopTable.COLUMN_DESCRIPTION, shoppingItemModel.description)
+        values.put(EshopTable.COLUMN_PRICE, shoppingItemModel.price)
+        values.put(EshopTable.COLUMN_IMAGEID, shoppingItemModel.imageID)
 
-            val db = this@EshopDatabaseHelperImpl.writableDatabase
-            db.insert(EshopTable.TABLE_NAME, null, values)
-            db.close()
-        }
+        val db = this@EshopDatabaseHelperImpl.writableDatabase
+        db.insert(EshopTable.TABLE_NAME, null, values)
+        db.close()
     }
 
     override suspend fun getShoppingItems(): MutableList<ShoppingItemModel> {

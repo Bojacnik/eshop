@@ -1,4 +1,4 @@
-package com.uzlabina.eshop.domain
+package com.uzlabina.eshop.domain.entities
 
 open class ShoppingItem(val id: Int,
                         val name: String,

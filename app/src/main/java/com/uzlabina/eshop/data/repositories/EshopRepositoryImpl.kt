@@ -1,9 +1,8 @@
 package com.uzlabina.eshop.data.repositories
 
 import com.uzlabina.eshop.data.datasources.EshopDataStorage
-import com.uzlabina.eshop.data.datasources.EshopDatabaseHelperImpl
 import com.uzlabina.eshop.data.models.ShoppingItemModel
-import com.uzlabina.eshop.domain.ShoppingItem
+import com.uzlabina.eshop.domain.entities.ShoppingItem
 import com.uzlabina.eshop.domain.repositories.EshopRepository
 import org.koin.java.KoinJavaComponent.inject
 
@@ -13,7 +12,7 @@ class EshopRepositoryImpl(): EshopRepository() {
     {
         return eshopDatabase.getShoppingItems().map{ it as ShoppingItem }.toMutableList()
     }
-    override fun addItem(item: ShoppingItem){
+    override suspend fun addItem(item: ShoppingItem){
         eshopDatabase.addShoppingItem(ShoppingItemModel(item.id, item.name, item.description, item.price, item.imageID))
     }
 }
