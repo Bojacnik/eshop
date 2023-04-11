@@ -7,14 +7,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uzlabina.eshop.R
 import com.uzlabina.eshop.presentation.adapter.ShoppingItemAdapter
-import com.uzlabina.eshop.data.models.ShoppingItemModel
+import com.uzlabina.eshop.domain.entities.ShoppingItem
 
 class ShoppingCartActivity : AppCompatActivity() {
-    lateinit var selectedItems: MutableList<ShoppingItemModel>
+    lateinit var selectedItems: MutableList<ShoppingItem>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shopping_cart_overview)
-        selectedItems = intent.extras?.getSerializable("selectedItems") as MutableList<ShoppingItemModel>
+        selectedItems = intent.extras?.getSerializable("selectedItems") as MutableList<ShoppingItem>
 
         val adapter = ShoppingItemAdapter(selectedItems)
         val recyclerView = findViewById<RecyclerView>(R.id.itemRecyclerView)
