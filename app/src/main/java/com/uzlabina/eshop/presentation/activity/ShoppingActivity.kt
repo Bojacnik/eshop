@@ -45,11 +45,11 @@ class ShoppingActivity : AppCompatActivity() {
         recyclerView.layoutManager = GridLayoutManager(applicationContext, 4)
         recyclerView.adapter = adapter
 
-        findViewById<Button>(R.id.btnBuy).setOnClickListener(View.OnClickListener {
+        findViewById<Button>(R.id.btnBuy).setOnClickListener {
             adapter.selectedItem.let {
                 selectedItems.add(adapter.selectedItem)
             }
-        })
+        }
         findViewById<ImageButton>(R.id.btnShoppingCart).setOnClickListener {
             val intent = Intent(this, ShoppingCartActivity::class.java)
             intent.putExtra("selectedItems", selectedItems as java.io.Serializable)

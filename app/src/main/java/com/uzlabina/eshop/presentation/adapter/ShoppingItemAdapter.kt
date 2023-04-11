@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.uzlabina.eshop.R
-import com.uzlabina.eshop.data.models.ShoppingItemModel
 import com.uzlabina.eshop.domain.entities.ShoppingItem
 
 class ShoppingItemAdapter(private val items: MutableList<ShoppingItem>) : RecyclerView.Adapter<ShoppingItemAdapter.ViewHolder>() {
@@ -32,10 +31,9 @@ class ShoppingItemAdapter(private val items: MutableList<ShoppingItem>) : Recycl
         holder.textViewName.text = items[position].name
         holder.textViewPrice.text = items[position].price.toString() + " Kč"
 
-        //pokud se budou přidávat jiné itemy než mají tak tahle funkce je SUS!
-        holder.container.setOnClickListener(View.OnClickListener {
+        holder.container.setOnClickListener {
             selectedItem = items[position]
-        })
+        }
     }
 
     override fun getItemCount(): Int {
