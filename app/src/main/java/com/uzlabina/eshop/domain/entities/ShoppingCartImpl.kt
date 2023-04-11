@@ -16,8 +16,8 @@ abstract class ShoppingCart {
     abstract fun clearItems()
 }
 
-data class ShoppingCartImpl(private var state: Companion.ShoppingCartState,
-                            private val shoppingList: MutableList<ShoppingItem>) : ShoppingCart() {
+data class ShoppingCartImpl(private var state: Companion.ShoppingCartState) : ShoppingCart() {
+    private val shoppingList = mutableListOf<ShoppingItem>()
     override fun getState(): Companion.ShoppingCartState {
         return state
     }

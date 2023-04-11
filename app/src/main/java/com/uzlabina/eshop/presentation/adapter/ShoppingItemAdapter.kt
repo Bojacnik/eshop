@@ -7,11 +7,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import arrow.core.left
+import arrow.core.right
 import com.uzlabina.eshop.R
 import com.uzlabina.eshop.domain.entities.ShoppingItem
+import com.uzlabina.eshop.domain.usecases.GetShoppingItemsFromDatabase
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 
-class ShoppingItemAdapter(private val items: MutableList<ShoppingItem>) : RecyclerView.Adapter<ShoppingItemAdapter.ViewHolder>() {
+class ShoppingItemAdapter() : RecyclerView.Adapter<ShoppingItemAdapter.ViewHolder>() {
 
+    private lateinit var items: List<ShoppingItem>
     lateinit var selectedItem: ShoppingItem
 
     // Create the ViewHolder for the RecyclerView items
@@ -22,7 +28,19 @@ class ShoppingItemAdapter(private val items: MutableList<ShoppingItem>) : Recycl
         val textViewPrice: TextView = itemView.findViewById(R.id.price)
 
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        var itemLoading = runBlocking{
+            async {
+                val databaseItems = GetShoppingItemsFromDatabase().call(Unit)
+                TODO("NOT FINISHED")
+                if (databaseItems.isLeft())
+                {
+                }
+            }
+        }
+
+
         val view = LayoutInflater.from(parent.context).inflate(R.layout.shopping_item, parent, false)
         return ViewHolder(view)
     }

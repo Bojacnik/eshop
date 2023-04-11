@@ -6,17 +6,20 @@ import android.widget.Button
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uzlabina.eshop.R
+import com.uzlabina.eshop.domain.entities.ShoppingCart
+import com.uzlabina.eshop.domain.entities.ShoppingCartImpl
 import com.uzlabina.eshop.presentation.adapter.ShoppingItemAdapter
 import com.uzlabina.eshop.domain.entities.ShoppingItem
+import org.koin.android.ext.android.inject
+import org.koin.java.KoinJavaComponent
 
 class ShoppingCartActivity : AppCompatActivity() {
-    lateinit var selectedItems: MutableList<ShoppingItem>
+    private val shoppingCart: ShoppingCart by KoinJavaComponent.inject(clazz = ShoppingCart::class.java)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shopping_cart_overview)
-        selectedItems = intent.extras?.getSerializable("selectedItems") as MutableList<ShoppingItem>
 
-        val adapter = ShoppingItemAdapter(selectedItems)
+        val adapter = KoinJavaComponent.get<ShoppingItemAdapter>(clazz = ShoppingItemAdapter::class.java)
         val recyclerView = findViewById<RecyclerView>(R.id.itemRecyclerView)
         recyclerView.layoutManager = GridLayoutManager(applicationContext, 4)
         recyclerView.adapter = adapter
@@ -28,19 +31,18 @@ class ShoppingCartActivity : AppCompatActivity() {
 
         val sendButton = findViewById<Button>(R.id.sendButton)
         sendButton.setOnClickListener {
+            TODO("Implement either sending an email with order or parse to JSON")
         }
 
         val removeitemButton = findViewById<Button>(R.id.btnRemoveSelected)
         removeitemButton.setOnClickListener {
-            selectedItems.remove(adapter.selectedItem)
-            TODO("Deletes it from local list, but not from MainActivity list")
+            shoppingCart.removeItem(adapter.selectedItem)
             adapter.notifyDataSetChanged()
         }
 
         val removeitemsButton = findViewById<Button>(R.id.btnRemoveAll)
         removeitemsButton.setOnClickListener {
-            selectedItems.clear()
-            TODO("Deletes it from local list, but not from MainActivity list")
+            shoppingCart.clearItems()
             adapter.notifyDataSetChanged()
         }
 
