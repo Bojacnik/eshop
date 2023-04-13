@@ -26,27 +26,29 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         />
+    <LinearLayout
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:flow_horizontalAlign="center"
+        app:flow_verticalAlign="center"
+        >
     <Button
         android:id="@+id/btnRemoveSelected"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="@string/remove_item"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         />
-    <!--- these buttons should be in some sort of layout -->
     <Button
         android:id="@+id/btnRemoveAll"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text="@string/remove_item"
+        android:text="@string/remove_all_items_from_cart"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         />
-    <!-- todo: add buy button that sends an email with the order, or parse it to json-->
-
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
