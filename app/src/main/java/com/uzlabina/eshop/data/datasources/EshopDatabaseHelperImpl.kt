@@ -42,50 +42,51 @@ class EshopDatabaseHelperImpl(context: Context) :
 
         val db = this@EshopDatabaseHelperImpl.writableDatabase
         db.insert(EshopTable.TABLE_NAME, null, values)
-        db.close()
+       // db.close()
     }
 
     override suspend fun getShoppingItems(): MutableList<ShoppingItemModel> {
-        return withContext(Dispatchers.IO) {
-        val shoppingItems = mutableListOf<ShoppingItemModel>()
+        //return withContext(Dispatchers.IO)
+        //{
+            val shoppingItems = mutableListOf<ShoppingItemModel>()
 
-        val db = this@EshopDatabaseHelperImpl.readableDatabase
-        val columns = arrayOf(
-            EshopTable.COLUMN_ID,
-            EshopTable.COLUMN_NAME,
-            EshopTable.COLUMN_DESCRIPTION,
-            EshopTable.COLUMN_PRICE,
-            EshopTable.COLUMN_IMAGEID
-        )
-        val cursor = db.query(
-            EshopTable.TABLE_NAME, columns, null, null, null, null,
-            EshopTable.COLUMN_ID, null)
+            val db = this@EshopDatabaseHelperImpl.readableDatabase
+            val columns = arrayOf(
+                EshopTable.COLUMN_ID,
+                EshopTable.COLUMN_NAME,
+                EshopTable.COLUMN_DESCRIPTION,
+                EshopTable.COLUMN_PRICE,
+                EshopTable.COLUMN_IMAGEID
+            )
+            val cursor = db.query(
+                EshopTable.TABLE_NAME, columns, null, null, null, null,
+                EshopTable.COLUMN_ID, null)
 
-        if (cursor.moveToFirst()) {
-            do {
-                val idIndex = cursor.getColumnIndex(EshopTable.COLUMN_ID)
-                val nameIndex = cursor.getColumnIndex(EshopTable.COLUMN_NAME)
-                val descIndex = cursor.getColumnIndex(EshopTable.COLUMN_DESCRIPTION)
-                val priceIndex = cursor.getColumnIndex(EshopTable.COLUMN_PRICE)
-                val imageIdIndex = cursor.getColumnIndex(EshopTable.COLUMN_IMAGEID)
+            if (cursor.moveToFirst()) {
+                do {
+                    val idIndex = cursor.getColumnIndex(EshopTable.COLUMN_ID)
+                    val nameIndex = cursor.getColumnIndex(EshopTable.COLUMN_NAME)
+                    val descIndex = cursor.getColumnIndex(EshopTable.COLUMN_DESCRIPTION)
+                    val priceIndex = cursor.getColumnIndex(EshopTable.COLUMN_PRICE)
+                    val imageIdIndex = cursor.getColumnIndex(EshopTable.COLUMN_IMAGEID)
 
-                // Check if all columns exist in the results.
-                if (idIndex != -1 && nameIndex != -1 && descIndex != -1 && priceIndex != -1 && imageIdIndex != -1) {
-                    val id = cursor.getInt(idIndex)
-                    val name = cursor.getString(nameIndex)
-                    val description = cursor.getString(descIndex)
-                    val price = cursor.getInt(priceIndex)
-                    val imageid = cursor.getInt(imageIdIndex)
-                    val book = ShoppingItemModel(id, name, description, price, imageid)
-                    shoppingItems.add(book)
-                } else {
-                    Log.e("Database", "One or more COLUMNS were NOT FOUND in the result set.")
-                }
-            } while (cursor.moveToNext())
-        }
-        cursor.close()
-        db.close()
-        shoppingItems
-        }
+                    // Check if all columns exist in the results.
+                    if (idIndex != -1 && nameIndex != -1 && descIndex != -1 && priceIndex != -1 && imageIdIndex != -1) {
+                        val id = cursor.getInt(idIndex)
+                        val name = cursor.getString(nameIndex)
+                        val description = cursor.getString(descIndex)
+                        val price = cursor.getInt(priceIndex)
+                        val imageid = cursor.getInt(imageIdIndex)
+                        val book = ShoppingItemModel(id, name, description, price, imageid)
+                        shoppingItems.add(book)
+                    } else {
+                        Log.e("Database", "One or more COLUMNS were NOT FOUND in the result set.")
+                    }
+                } while (cursor.moveToNext())
+            }
+            cursor.close()
+            //db.close()
+            return shoppingItems
+       // }
     }
 }

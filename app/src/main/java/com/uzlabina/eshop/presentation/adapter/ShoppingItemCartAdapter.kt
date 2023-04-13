@@ -12,29 +12,14 @@ import arrow.core.right
 import com.uzlabina.eshop.R
 import com.uzlabina.eshop.domain.entities.ShoppingCart
 import com.uzlabina.eshop.domain.entities.ShoppingItem
-import com.uzlabina.eshop.domain.repositories.EshopRepository
 import com.uzlabina.eshop.domain.usecases.GetShoppingItemsFromDatabase
+import com.uzlabina.eshop.domain.usecases.GetShoppingItemsFromShoppingCart
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
-import org.koin.java.KoinJavaComponent
 
-class ShoppingItemAdapter() : RecyclerView.Adapter<ShoppingItemAdapter.ViewHolder>() {
+class ShoppingItemCartAdapter() : RecyclerView.Adapter<ShoppingItemCartAdapter.ViewHolder>() {
+    private val getShoppingItemsFromShoppingCart: GetShoppingItemsFromShoppingCart = GetShoppingItemsFromShoppingCart()
     lateinit var selectedItem: ShoppingItem
-    private lateinit var items: List<ShoppingItem>
-    //val repositiory: EshopRepository by KoinJavaComponent.inject(clazz = EshopRepository::class.java)
-
-    init {
-        runBlocking {
-        GetShoppingItemsFromDatabase().call(Unit).fold(
-            {e -> throw e},
-            {value -> items = value}
-        )}
-        /*
-        runBlocking {
-            items = repositiory.getItems()
-        }
-        */
-    }
 
     // Create the ViewHolder for the RecyclerView items
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -50,6 +35,12 @@ class ShoppingItemAdapter() : RecyclerView.Adapter<ShoppingItemAdapter.ViewHolde
         return ViewHolder(view)
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        var items: List<ShoppingItem> = emptyList()
+        runBlocking {
+        getShoppingItemsFromShoppingCart.call(Unit).fold(
+            { e -> throw e },
+            {value -> items = value }
+        )}
         holder.imageViewItemPicture.setImageResource(items[position].imageID)
         holder.textViewName.text = items[position].name
         holder.textViewPrice.text = items[position].price.toString() + " Kč"
@@ -60,6 +51,12 @@ class ShoppingItemAdapter() : RecyclerView.Adapter<ShoppingItemAdapter.ViewHolde
     }
 
     override fun getItemCount(): Int {
+        var items: List<ShoppingItem> = emptyList()
+        runBlocking {
+            getShoppingItemsFromShoppingCart.call(Unit).fold(
+                { e -> throw e },
+                {value -> items = value }
+            )}
         return items.size
     }
 }

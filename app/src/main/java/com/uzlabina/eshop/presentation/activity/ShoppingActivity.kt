@@ -19,6 +19,7 @@ import com.uzlabina.eshop.presentation.adapter.ShoppingItemAdapter
 import com.uzlabina.eshop.domain.entities.ShoppingItem
 import com.uzlabina.eshop.domain.repositories.EshopRepository
 import com.uzlabina.eshop.domain.usecases.AddShoppingItemToDatabase
+import com.uzlabina.eshop.presentation.adapter.ShoppingItemCartAdapter
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
@@ -31,6 +32,22 @@ class ShoppingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+        val shoppingItems = mutableListOf<ShoppingItem>()
+        shoppingItems.add(ShoppingItem(0, "Počítač", null, 30598, R.drawable.jidl))
+        shoppingItems.add(ShoppingItem(1, "Pero", null, 15, R.drawable.ic_launcher_background))
+/*
+        val addShoppingItemToDatabase = AddShoppingItemToDatabase()
+
+        runBlocking {
+          val result = async {
+              addShoppingItemToDatabase.call(shoppingItems[0])
+              addShoppingItemToDatabase.call(shoppingItems[1])
+          }
+          if (result.await().isLeft())
+              throw Exception("Chyba v přidávání itemů do databáze při startu ShoppingActivity!")
+        }
+*/
         //init of dependency injection
         startKoin {
             androidContext(this@ShoppingActivity)
@@ -39,14 +56,12 @@ class ShoppingActivity : AppCompatActivity() {
                 single<EshopRepository> { EshopRepositoryImpl() }
                 single<ShoppingCart> { ShoppingCartImpl(ShoppingCart.Companion.ShoppingCartState.SHOPPING) }
                 single<ShoppingItemAdapter> { ShoppingItemAdapter() }
+                single<ShoppingItemCartAdapter> { ShoppingItemCartAdapter() }
             })
         }
-        val shoppingItems = mutableListOf<ShoppingItem>()
-        shoppingItems.add(ShoppingItem(0, "Počítač", null, 30598, R.drawable.jidl))
-        shoppingItems.add(ShoppingItem(1, "Pero", null, 15, R.drawable.ic_launcher_background))
 
+        /*
         val addShoppingItemToDatabase = AddShoppingItemToDatabase()
-
         runBlocking {
             val result = async {
                 addShoppingItemToDatabase.call(shoppingItems[0])
@@ -55,6 +70,7 @@ class ShoppingActivity : AppCompatActivity() {
             if (result.await().isLeft())
                 throw Exception("Chyba v přidávání itemů do databáze při startu ShoppingActivity!")
         }
+         */
 
         val adapter = KoinJavaComponent.get<ShoppingItemAdapter>(clazz = ShoppingItemAdapter::class.java)
         val recyclerView = findViewById<RecyclerView>(R.id.itemRecyclerView)

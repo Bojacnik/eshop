@@ -26,27 +26,32 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+        <Button
+            android:id="@+id/btnRemoveAll"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/clear"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
     <Button
         android:id="@+id/btnRemoveSelected"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text="@string/remove_item"
+        android:text="@string/remove_item2"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />
-    <!--- these buttons should be in some sort of layout -->
-    <Button
-        android:id="@+id/btnRemoveAll"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:text="@string/remove_item"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        />
-    <!-- todo: add buy button that sends an email with the order, or parse it to json-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

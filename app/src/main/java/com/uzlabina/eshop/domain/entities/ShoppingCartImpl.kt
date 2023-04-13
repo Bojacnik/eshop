@@ -14,6 +14,7 @@ abstract class ShoppingCart {
     abstract fun addItem(item: ShoppingItem)
     abstract fun removeItem(item: ShoppingItem)
     abstract fun clearItems()
+    abstract fun getItems(): List<ShoppingItem>
 }
 
 data class ShoppingCartImpl(private var state: Companion.ShoppingCartState) : ShoppingCart() {
@@ -36,5 +37,9 @@ data class ShoppingCartImpl(private var state: Companion.ShoppingCartState) : Sh
     override fun clearItems()
     {
         shoppingList.clear()
+    }
+
+    override fun getItems(): List<ShoppingItem> {
+        return shoppingList
     }
 }
