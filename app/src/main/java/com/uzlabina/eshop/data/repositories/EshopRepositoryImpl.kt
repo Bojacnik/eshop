@@ -10,7 +10,8 @@ class EshopRepositoryImpl(): EshopRepository() {
     private val eshopDatabase: EshopDataStorage by inject(clazz = EshopDataStorage::class.java)
     override fun getItems(): MutableList<ShoppingItem>
     {
-        return eshopDatabase.getShoppingItems().map{ it as ShoppingItem }.toMutableList()
+        //TODO: check this bullshit out
+        return eshopDatabase.getShoppingItems().toMutableList()
     }
     override fun addItem(item: ShoppingItem){
         eshopDatabase.addShoppingItem(ShoppingItemModel(item.id, item.name, item.description, item.price, item.imageID))

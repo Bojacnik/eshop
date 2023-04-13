@@ -35,6 +35,7 @@ class EshopDatabaseHelperImpl(context: Context) :
 
     override fun addShoppingItem(shoppingItemModel: ShoppingItemModel) {
         val values = ContentValues()
+        values.put(EshopTable.COLUMN_ID, shoppingItemModel.id)
         values.put(EshopTable.COLUMN_NAME, shoppingItemModel.name)
         values.put(EshopTable.COLUMN_DESCRIPTION, shoppingItemModel.description)
         values.put(EshopTable.COLUMN_PRICE, shoppingItemModel.price)
@@ -47,7 +48,6 @@ class EshopDatabaseHelperImpl(context: Context) :
 
     override fun getShoppingItems(): MutableList<ShoppingItemModel> {
         val shoppingItems = mutableListOf<ShoppingItemModel>()
-
         val db = this@EshopDatabaseHelperImpl.readableDatabase
         val columns = arrayOf(
             EshopTable.COLUMN_ID,
@@ -78,9 +78,10 @@ class EshopDatabaseHelperImpl(context: Context) :
                     val book = ShoppingItemModel(id, name, description, price, imageid)
                     shoppingItems.add(book)
                 } else {
-                    Log.e("Database", "One or more COLUMNS were NOT FOUND in the result set.")
+                    Log.println(Log.DEBUG,"Database", "One or more COLUMNS were NOT FOUND in the result set.")
                 }
             } while (cursor.moveToNext())
+            Log.println(Log.DEBUG,"Database", "Query sucessfully completed")
         }
         cursor.close()
         db.close()
