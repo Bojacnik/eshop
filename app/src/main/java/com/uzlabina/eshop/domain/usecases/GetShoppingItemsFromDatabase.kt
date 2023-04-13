@@ -9,7 +9,7 @@ import org.koin.java.KoinJavaComponent.inject
 class GetShoppingItemsFromDatabase(): UseCase<List<ShoppingItem>, Unit> {
     private val eshopRepository: EshopRepository by inject(clazz = EshopRepository::class.java)
 
-    override suspend fun call(params: Unit): Either<Throwable, List<ShoppingItem>> {
+    override fun call(params: Unit): Either<Throwable, List<ShoppingItem>> {
 
         val items: List<ShoppingItem>
         try {

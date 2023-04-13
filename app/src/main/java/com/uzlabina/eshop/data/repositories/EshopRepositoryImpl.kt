@@ -8,11 +8,11 @@ import org.koin.java.KoinJavaComponent.inject
 
 class EshopRepositoryImpl(): EshopRepository() {
     private val eshopDatabase: EshopDataStorage by inject(clazz = EshopDataStorage::class.java)
-    override suspend fun getItems(): MutableList<ShoppingItem>
+    override fun getItems(): MutableList<ShoppingItem>
     {
         return eshopDatabase.getShoppingItems().map{ it as ShoppingItem }.toMutableList()
     }
-    override suspend fun addItem(item: ShoppingItem){
+    override fun addItem(item: ShoppingItem){
         eshopDatabase.addShoppingItem(ShoppingItemModel(item.id, item.name, item.description, item.price, item.imageID))
     }
 }

@@ -9,7 +9,7 @@ import org.koin.java.KoinJavaComponent
 class RemoveItemFromShoppingCart: UseCase<Unit, ShoppingItem> {
     private val shoppingCart: ShoppingCart by KoinJavaComponent.inject(clazz = ShoppingCart::class.java)
 
-    override suspend fun call(params: ShoppingItem): Either<Throwable, Unit>
+    override fun call(params: ShoppingItem): Either<Throwable, Unit>
     {
         try {
             shoppingCart.removeItem(params)

@@ -12,8 +12,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 interface EshopDataStorage {
-    suspend fun addShoppingItem(shoppingItemModel: ShoppingItemModel)
-    suspend fun getShoppingItems(): MutableList<ShoppingItemModel>
+    fun addShoppingItem(shoppingItemModel: ShoppingItemModel)
+    fun getShoppingItems(): MutableList<ShoppingItemModel>
 }
 
 class EshopDatabaseHelperImpl(context: Context) :
@@ -33,7 +33,7 @@ class EshopDatabaseHelperImpl(context: Context) :
         onCreate(db)
     }
 
-    override suspend fun addShoppingItem(shoppingItemModel: ShoppingItemModel) {
+    override fun addShoppingItem(shoppingItemModel: ShoppingItemModel) {
         val values = ContentValues()
         values.put(EshopTable.COLUMN_NAME, shoppingItemModel.name)
         values.put(EshopTable.COLUMN_DESCRIPTION, shoppingItemModel.description)
@@ -45,8 +45,7 @@ class EshopDatabaseHelperImpl(context: Context) :
         db.close()
     }
 
-    override suspend fun getShoppingItems(): MutableList<ShoppingItemModel> {
-        return withContext(Dispatchers.IO) {
+    override fun getShoppingItems(): MutableList<ShoppingItemModel> {
         val shoppingItems = mutableListOf<ShoppingItemModel>()
 
         val db = this@EshopDatabaseHelperImpl.readableDatabase
@@ -85,7 +84,6 @@ class EshopDatabaseHelperImpl(context: Context) :
         }
         cursor.close()
         db.close()
-        shoppingItems
-        }
+        return shoppingItems
     }
 }

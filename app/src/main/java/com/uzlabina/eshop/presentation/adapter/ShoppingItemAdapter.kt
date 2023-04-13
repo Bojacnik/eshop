@@ -6,19 +6,25 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import arrow.core.left
 import arrow.core.right
 import com.uzlabina.eshop.R
 import com.uzlabina.eshop.domain.entities.ShoppingItem
 import com.uzlabina.eshop.domain.usecases.GetShoppingItemsFromDatabase
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 class ShoppingItemAdapter() : RecyclerView.Adapter<ShoppingItemAdapter.ViewHolder>() {
-
     private lateinit var items: List<ShoppingItem>
     lateinit var selectedItem: ShoppingItem
+
+    init {
+        GetShoppingItemsFromDatabase().call(Unit).fold(
+            {e -> throw e},
+            {value -> items = value}
+        )
+    }
 
     // Create the ViewHolder for the RecyclerView items
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -26,21 +32,9 @@ class ShoppingItemAdapter() : RecyclerView.Adapter<ShoppingItemAdapter.ViewHolde
         val imageViewItemPicture: ImageView = itemView.findViewById(R.id.image)
         val textViewName: TextView = itemView.findViewById(R.id.name)
         val textViewPrice: TextView = itemView.findViewById(R.id.price)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var itemLoading = runBlocking{
-            async {
-                val databaseItems = GetShoppingItemsFromDatabase().call(Unit)
-                TODO("NOT FINISHED")
-                if (databaseItems.isLeft())
-                {
-                }
-            }
-        }
-
-
         val view = LayoutInflater.from(parent.context).inflate(R.layout.shopping_item, parent, false)
         return ViewHolder(view)
     }

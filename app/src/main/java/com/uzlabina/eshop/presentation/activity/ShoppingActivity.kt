@@ -4,6 +4,7 @@ import kotlinx.coroutines.*
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
@@ -19,6 +20,7 @@ import com.uzlabina.eshop.presentation.adapter.ShoppingItemAdapter
 import com.uzlabina.eshop.domain.entities.ShoppingItem
 import com.uzlabina.eshop.domain.repositories.EshopRepository
 import com.uzlabina.eshop.domain.usecases.AddShoppingItemToDatabase
+import com.uzlabina.eshop.domain.usecases.GetShoppingItemsFromDatabase
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
@@ -38,7 +40,9 @@ class ShoppingActivity : AppCompatActivity() {
                 single<EshopDataStorage> {  EshopDatabaseHelperImpl(this@ShoppingActivity) }
                 single<EshopRepository> { EshopRepositoryImpl() }
                 single<ShoppingCart> { ShoppingCartImpl(ShoppingCart.Companion.ShoppingCartState.SHOPPING) }
-                single<ShoppingItemAdapter> { ShoppingItemAdapter() }
+                single<ShoppingItemAdapter> {
+                    ShoppingItemAdapter()
+                }
             })
         }
         val shoppingItems = mutableListOf<ShoppingItem>()
@@ -46,21 +50,18 @@ class ShoppingActivity : AppCompatActivity() {
         shoppingItems.add(ShoppingItem(1, "Pero", null, 15, R.drawable.ic_launcher_background))
 
         val addShoppingItemToDatabase = AddShoppingItemToDatabase()
-
-        runBlocking {
-            val result = async {
-                addShoppingItemToDatabase.call(shoppingItems[0])
-                addShoppingItemToDatabase.call(shoppingItems[1])
-            }
-            if (result.await().isLeft())
-                throw Exception("Chyba v přidávání itemů do databáze při startu ShoppingActivity!")
-        }
-
+        Log.println(Log.DEBUG, "start", "start")
+        if(addShoppingItemToDatabase.call(shoppingItems[0]).isLeft())
+            throw Exception("cnanot fucking add it")
+        addShoppingItemToDatabase.call(shoppingItems[1])
+        Log.println(Log.DEBUG, "start", "start2")
         val adapter = KoinJavaComponent.get<ShoppingItemAdapter>(clazz = ShoppingItemAdapter::class.java)
+        Log.println(Log.DEBUG, "start", "start3.25")
         val recyclerView = findViewById<RecyclerView>(R.id.itemRecyclerView)
         recyclerView.layoutManager = GridLayoutManager(applicationContext, 4)
+        Log.println(Log.DEBUG, "start", "start3.5")
         recyclerView.adapter = KoinJavaComponent.get<ShoppingItemAdapter>(clazz = ShoppingItemAdapter::class.java)
-
+        Log.println(Log.DEBUG, "start", "start3")
         findViewById<Button>(R.id.btnBuy).setOnClickListener {
             adapter.selectedItem.let {
                 shoppingCart.addItem(adapter.selectedItem)
@@ -72,6 +73,7 @@ class ShoppingActivity : AppCompatActivity() {
             //TODO: I suspect that if the user clicks back the states will break but not sure
             startActivity(intent)
         }
+        Log.println(Log.DEBUG, "start", "start4")
     }
 
 
