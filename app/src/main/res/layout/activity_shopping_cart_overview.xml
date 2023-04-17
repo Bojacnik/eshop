@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         />
+<<<<<<< HEAD
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -43,15 +44,39 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             />
+=======
+    <LinearLayout
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:flow_horizontalAlign="center"
+        app:flow_verticalAlign="center"
+        >
+>>>>>>> d069e96 (fix: ui)
     <Button
         android:id="@+id/btnRemoveSelected"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="@string/remove_item2"
         android:textAlignment="center"
+<<<<<<< HEAD
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+=======
+        />
+    <Button
+        android:id="@+id/btnRemoveAll"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/remove_all_items_from_cart"
+        android:textAlignment="center"
+        />
+    </LinearLayout>
+>>>>>>> d069e96 (fix: ui)
 </androidx.constraintlayout.widget.ConstraintLayout>

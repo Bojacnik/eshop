@@ -12,6 +12,10 @@
     <string name="arrow_left">￩</string>
     <string name="remove_item">Remove item from cart</string>
     <string name="send">send</string>
+<<<<<<< HEAD
     <string name="clear">clear</string>
     <string name="remove_item2">remove item</string>
+=======
+    <string name="remove_all_items_from_cart">Remove all items from cart</string>
+>>>>>>> d069e96 (fix: ui)
 </resources>
